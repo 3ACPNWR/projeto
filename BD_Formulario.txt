@@ -1,0 +1,86 @@
+-- ------ CBS-Companhia Brasileira de Software ------------------
+-- -- @Author: Walter Palma && William Pansutti -----------------
+-- ------ Sistema Bancário - Caixa Eletrônico -------------------
+-- --------------------------------------------------------------
+
+CREATE DATABASE usjt;
+USE usjt;
+-- -------------------------------------------------------------
+
+CREATE TABLE cliente (  
+nome   VARCHAR(60) NOT NULL,
+agencia CHAR(04) NOT NULL,  
+conta  CHAR(06) NOT NULL,
+  PRIMARY KEY (conta)  
+) ENGINE = InnoDB;
+
+-- -------------------------------------------------------------
+CREATE TABLE saldo(
+conta 	CHAR(06) NOT NULL,
+saldo 	DOUBLE	 NOT NULL,
+data_saldo DATE NOT NULL,
+   PRIMARY KEY (data_saldo)
+)ENGINE = InnoDB;
+
+ALTER TABLE saldo ADD FOREIGN KEY (conta) 
+REFERENCES cliente (conta)
+ON DELETE RESTRICT;
+
+-- -------------------------------------------------------------
+
+CREATE TABLE debAuto (
+servico char(01) NOT NULL,
+operadora VARCHAR(06) NOT NULL,
+data_deb DATE NOT NULL,
+consumidor VARCHAR(06) NOT NULL,
+  PRIMARY KEY (operadora)
+) ENGINE = InnoDB;
+
+-- -------------------------------------------------------------
+
+CREATE TABLE transferencia(
+agencia char(04) NOT NULL,
+conta	char(06) NOT NULL,
+valor 	DOUBLE	 NOT NULL,
+id_transf INT NOT NULL,
+   PRIMARY KEY (conta)
+)ENGINE = InnoDB;
+
+-- -------------------------------------------------------------
+
+CREATE TABLE saque(
+conta CHAR(06) NOT NULL,
+valor 	DOUBLE	 NOT NULL,
+   PRIMARY KEY (conta)
+)ENGINE = InnoDB;
+ALTER TABLE saque ADD FOREIGN KEY (conta)
+REFERENCES cliente (conta)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT;
+
+-- -------------------------------------------------------------
+
+CREATE TABLE extrato(
+conta CHAR(06) NOT NULL,
+valor 	DOUBLE	 NOT NULL,
+data_ext DATETIME NOT NULL,
+   PRIMARY KEY (conta)
+)ENGINE = InnoDB;
+ ALTER TABLE extrato ADD FOREIGN KEY (conta)
+ REFERENCES cliente (conta)
+ ON DELETE RESTRICT
+ ON UPDATE RESTRICT;
+ 
+ -- -------------------------------------------------------------
+ -- ------- Exibir Tabelas --------------------------------------
+ 
+ SELECT * FROM cliente;
+ SELECT * FROM saldo;
+ SELECT * FROM debAuto;
+ SELECT * FROM transferencia;
+ SELECT * FROM saque;
+ SELECT * FROM extrato;
+ 
+ -- --------------------------------------------------------------------------------------------------------------
+
+
